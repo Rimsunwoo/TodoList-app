@@ -9,7 +9,8 @@ function TodoForm({ setTodos }) {
     else if (content.trimStart().trimEnd() === "") alert("내용을 입력해주세요");
     else {
       let todoData = JSON.parse(localStorage.getItem("todoData"));
-      todoData.push({ title, content, done: 0 });
+      let now = new Date();
+      todoData.push({ title, content, done: 0, id: now.getTime() });
       localStorage.setItem("todoData", JSON.stringify(todoData));
       setTodos(todoData);
       setTitle("");

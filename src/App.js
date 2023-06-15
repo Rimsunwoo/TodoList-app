@@ -15,7 +15,7 @@ function App() {
     <div className="layout-container">
       <Header></Header>
       <TodoForm setTodos={setTodos}></TodoForm>
-      <TodoSection todos={todos}></TodoSection>
+      <TodoSection todos={todos} setTodos={setTodos}></TodoSection>
     </div>
   );
 }
