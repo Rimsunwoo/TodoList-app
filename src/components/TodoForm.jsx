@@ -10,7 +10,7 @@ function TodoForm({ setTodos }) {
     else {
       let todoData = JSON.parse(localStorage.getItem("todoData"));
       let now = new Date();
-      todoData.push({ title, content, done: 0, id: now.getTime() });
+      todoData.push({ title, content, done: false, id: now.getTime() });
       localStorage.setItem("todoData", JSON.stringify(todoData));
       setTodos(todoData);
       setTitle("");

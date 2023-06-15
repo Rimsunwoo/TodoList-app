@@ -13,9 +13,9 @@ function App() {
 
   return (
     <div className="layout-container">
-      <Header></Header>
-      <TodoForm setTodos={setTodos}></TodoForm>
-      <TodoSection todos={todos} setTodos={setTodos}></TodoSection>
+      <Header />
+      <TodoForm setTodos={setTodos} />
+      <TodoSection todos={todos} setTodos={setTodos} />
     </div>
   );
 }

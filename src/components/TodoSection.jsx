@@ -7,7 +7,7 @@ function TodoSection({ todos, setTodos }) {
         <h1>할 거..🔥</h1>
         <div className="todoCard-container">
           {todos
-            .filter((todo) => todo.done === 0)
+            .filter((todo) => todo.done === false)
             .map((todo, i) => {
               return <TodoCard key={i} todo={todo} setTodos={setTodos} />;
             })}
@@ -17,9 +17,9 @@ function TodoSection({ todos, setTodos }) {
         <h1>한 거..🎉</h1>
         <div className="todoCard-container">
           {todos
-            .filter((todo) => todo.done === 1)
+            .filter((todo) => todo.done === true)
             .map((todo, i) => {
-              return <TodoCard key={i} todo={todo} />;
+              return <TodoCard key={i} todo={todo} setTodos={setTodos} />;
             })}
         </div>
       </section>
