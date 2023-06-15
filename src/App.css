@@ -3,13 +3,13 @@
   box-sizing: border-box;
 }
 body {
-  background-color: gainsboro;
+  height: 100%;
 }
 
 .layout-container {
   min-width: 800px;
   max-width: 1200px;
-  height: 100vh;
+  height: 100%;
   margin: 0px auto;
   background-color: white;
 }
