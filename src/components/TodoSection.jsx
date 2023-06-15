@@ -1,21 +1,26 @@
-import React, { useState } from "react";
+import React from "react";
 import TodoCard from "./TodoCard";
-function TodoSection({ section }) {
-  let [working, setWorking] = useState([]);
-  let [done, setDone] = useState([]);
+function TodoSection({ todos }) {
   return (
     <div className="todoSection-container">
       <section className="working-section">
         <h1>할 거..🔥</h1>
         <div className="todoCard-container">
-          <TodoCard></TodoCard>
-          <TodoCard></TodoCard>
+          {todos
+            .filter((todo) => todo.done == 0)
+            .map((todo, i) => {
+              return <TodoCard key={i} todo={todo} />;
+            })}
         </div>
       </section>
       <section className="done-section">
         <h1>한 거..🎉</h1>
         <div className="todoCard-container">
-          <TodoCard></TodoCard>
+          {todos
+            .filter((todo) => todo.done == 1)
+            .map((todo, i) => {
+              return <TodoCard key={i} todo={todo} />;
+            })}
         </div>
       </section>
     </div>
