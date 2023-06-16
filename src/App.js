@@ -8,8 +8,9 @@ function App() {
   if (localStorage.getItem("todoData") == null)
     localStorage.setItem("todoData", JSON.stringify([]));
 
-  const todoData = JSON.parse(localStorage.getItem("todoData"));
-  const [todos, setTodos] = useState([...todoData]);
+  const [todoData, setTodoData] = useState(
+    JSON.parse(localStorage.getItem("todoData"))
+  );
   const [form, setForm] = useState({ title: "", content: "" });
 
   const addTodoHandler = (e) => {
@@ -18,19 +19,21 @@ function App() {
     else if (form.content.trimStart().trimEnd() === "")
       alert("내용을 입력해주세요");
     else {
-      let todoData = JSON.parse(localStorage.getItem("todoData"));
       let now = new Date();
-      todoData.push({
+      let newData = {
         title: form.title,
         content: form.content,
         done: false,
         id: now.getTime(),
-      });
+      };
+      setTodoData([...todoData, newData]);
+      console.log("hi");
       localStorage.setItem("todoData", JSON.stringify(todoData));
-      setTodos(todoData);
+      setForm({ title: "", content: "" });
     }
   };
 
+  // input change
   const onChangeForm = (e) => {
     const newForm = {
       ...form,
@@ -39,32 +42,50 @@ function App() {
     setForm(newForm);
   };
 
+  // section commponent filter(todo, done)
   const onFilterTodo = (bool) => {
-    return todos
+    return todoData
       .filter((todo) => todo.done === bool)
       .map((todo) => {
-        return <TodoCard key={todo.id}></TodoCard>;
+        return (
+          <TodoCard
+            key={todo.id}
+            onRemoveTodo={onRemoveTodo}
+            onModifyTodo={onModifyTodo}
+            todo={todo}
+          ></TodoCard>
+        );
       });
   };
 
-  const onRemoveTodo = (removeTodo, newTodos) => {
-    let todoData = JSON.parse(localStorage.getItem("todoData"));
-    let newData = todoData.filter((a) => a.id !== removeTodo.id);
+  // remove Todo
+  const onRemoveTodo = (romoveTarget) => {
+    let newData = todoData.filter((a) => a.id !== romoveTarget);
+    setTodoData(newData);
+    localStorage.setItem("todoData", JSON.stringify(newData));
+  };
+
+  // Modify Todo (todo <=> done)
+  const onModifyTodo = (modifyTarget) => {
+    let newData = todoData.map((todo) => {
+      if (todo.id === modifyTarget) {
+        todo.done = !todo.done;
+      }
+      return todo;
+    });
+    setTodoData(newData);
+    localStorage.setItem("todoData", JSON.stringify(newData));
   };
 
   return (
     <div className="layout-container">
       <Header />
       <TodoForm
-        addTodoHaneler={addTodoHandler}
+        addTodoHandler={addTodoHandler}
         form={form}
         onChangeForm={onChangeForm}
       />
-      <TodoSection
-        todos={todos}
-        onRemoveTodo={onRemoveTodo}
-        onFilterTodo={onFilterTodo}
-      />
+      <TodoSection onFilterTodo={onFilterTodo} />
     </div>
   );
 }

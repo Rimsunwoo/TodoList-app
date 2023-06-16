@@ -1,39 +1,15 @@
 import React from "react";
 
-function TodoCard({ todo, setTodos }) {
-  let todoData = JSON.parse(localStorage.getItem("todoData"));
-  // 삭제
-
-  const removeTodo = () => {
-    setTodos(newData);
-    localStorage.setItem("todoData", JSON.stringify(newData));
-  };
-  /////수정
-  const modifyTodo = () => {
-    let i = 0;
-    let newData = todoData.map((a) => {
-      if (a.id === todo.id) {
-        let status = a.done === false ? true : false;
-        i = todoData.indexOf(a);
-        a.done = status;
-      }
-      return a;
-    });
-    let b = newData[i];
-    newData.splice(i, 1, b);
-    console.log(newData);
-    setTodos(newData);
-    localStorage.setItem("todoData", JSON.stringify(newData));
-  };
+function TodoCard({ todo, onRemoveTodo, onModifyTodo }) {
   return (
     <div className="card-container">
       <h3>{todo.title}</h3>
       <h4>{todo.content}</h4>
       <div className="button-container">
-        <button className="btn-red" onClick={removeTodo}>
+        <button className="btn-red" onClick={() => onRemoveTodo(todo.id)}>
           삭제하기
         </button>
-        <button className="btn-green" onClick={modifyTodo}>
+        <button className="btn-green" onClick={() => onModifyTodo(todo.id)}>
           {todo.done === false ? "완료" : "취소"}
         </button>
       </div>

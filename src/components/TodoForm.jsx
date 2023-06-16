@@ -1,9 +1,9 @@
 import React from "react";
 
-function TodoForm({ addTodoHanedler, onChangeForm, form }) {
+function TodoForm({ addTodoHandler, onChangeForm, form }) {
   return (
     <div className="todoForm-container">
-      <form className="todoForm" onSubmit={addTodoHanedler}>
+      <form className="todoForm">
         <span>제목</span>
         <input
           type="text"
@@ -18,7 +18,7 @@ function TodoForm({ addTodoHanedler, onChangeForm, form }) {
           value={form.content}
           onChange={onChangeForm}
         />
-        <button className="btn-add" type="submit">
+        <button className="btn-add" type="button" onClick={addTodoHandler}>
           추가하기
         </button>
       </form>
