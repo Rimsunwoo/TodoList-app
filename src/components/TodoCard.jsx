@@ -1,14 +1,14 @@
 import React from "react";
 
 function TodoCard({ todo, setTodos }) {
-  let btnTxt = todo.done === false ? "완료" : "취소";
   let todoData = JSON.parse(localStorage.getItem("todoData"));
+  // 삭제
+
   const removeTodo = () => {
-    let newData = todoData.filter((a) => a.id !== todo.id);
     setTodos(newData);
     localStorage.setItem("todoData", JSON.stringify(newData));
   };
-  /////
+  /////수정
   const modifyTodo = () => {
     let i = 0;
     let newData = todoData.map((a) => {
@@ -34,7 +34,7 @@ function TodoCard({ todo, setTodos }) {
           삭제하기
         </button>
         <button className="btn-green" onClick={modifyTodo}>
-          {btnTxt}
+          {todo.done === false ? "완료" : "취소"}
         </button>
       </div>
     </div>
