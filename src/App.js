@@ -5,30 +5,24 @@ import TodoForm from "./components/TodoForm";
 import TodoSection from "./components/TodoSection";
 import TodoCard from "./components/TodoCard";
 function App() {
-  if (localStorage.getItem("todoData") == null)
-    localStorage.setItem("todoData", JSON.stringify([]));
-
   const [todoData, setTodoData] = useState(
-    JSON.parse(localStorage.getItem("todoData"))
+    JSON.parse(localStorage.getItem("todoData")) ?? []
   );
   const [form, setForm] = useState({ title: "", content: "" });
 
   const addTodoHandler = (e) => {
     e.preventDefault();
-    if (form.title.trimStart().trimEnd() === "") alert("제목을 입력해주세요");
-    else if (form.content.trimStart().trimEnd() === "")
-      alert("내용을 입력해주세요");
+    if (form.title.trim() === "") alert("제목을 입력해주세요");
+    else if (form.content.trim() === "") alert("내용을 입력해주세요");
     else {
-      let now = new Date();
-      let newData = {
+      const newData = {
         title: form.title,
         content: form.content,
         done: false,
-        id: now.getTime(),
+        id: Date.now(),
       };
       setTodoData([...todoData, newData]);
-      console.log("hi");
-      localStorage.setItem("todoData", JSON.stringify(todoData));
+      localStorage.setItem("todoData", JSON.stringify([...todoData, newData]));
       setForm({ title: "", content: "" });
     }
   };
