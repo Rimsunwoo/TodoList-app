@@ -1,38 +1,24 @@
-import React, { useState } from "react";
+import React from "react";
 
-function TodoForm({ setTodos }) {
-  let [title, setTitle] = useState("");
-  let [content, setContent] = useState("");
-  const addTodoHaneler = (e) => {
-    e.preventDefault();
-    if (title.trimStart().trimEnd() === "") alert("제목을 입력해주세요");
-    else if (content.trimStart().trimEnd() === "") alert("내용을 입력해주세요");
-    else {
-      let todoData = JSON.parse(localStorage.getItem("todoData"));
-      let now = new Date();
-      todoData.push({ title, content, done: false, id: now.getTime() });
-      localStorage.setItem("todoData", JSON.stringify(todoData));
-      setTodos(todoData);
-      setTitle("");
-      setContent("");
-    }
-  };
+function TodoForm({ addTodoHandler, onChangeForm, form }) {
   return (
     <div className="todoForm-container">
-      <form className="todoForm" action="">
+      <form className="todoForm">
         <span>제목</span>
         <input
           type="text"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
+          name="title"
+          value={form.title}
+          onChange={onChangeForm}
         />
         <span>내용</span>
         <input
           type="text"
-          value={content}
-          onChange={(e) => setContent(e.target.value)}
+          name="content"
+          value={form.content}
+          onChange={onChangeForm}
         />
-        <button className="btn-add" onClick={addTodoHaneler}>
+        <button className="btn-add" type="button" onClick={addTodoHandler}>
           추가하기
         </button>
       </form>
