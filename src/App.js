@@ -16,6 +16,7 @@ function App() {
       <Header />
       <TodoForm setTodos={setTodos} />
       <TodoSection todos={todos} setTodos={setTodos} />
+      <div></div>
     </div>
   );
 }
