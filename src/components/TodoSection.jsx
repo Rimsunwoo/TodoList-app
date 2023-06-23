@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import TodoCard from "../components/TodoCard";
 import { styled } from "styled-components";
@@ -18,6 +18,9 @@ const SectionContainer = styled.div`
 
 function TodoSection() {
   const todoData = useSelector((state) => state.todos.todoList);
+  useEffect(() => {
+    localStorage.setItem("todoData", JSON.stringify(todoData));
+  }, [todoData]);
 
   const onFilterTodo = (bool) => {
     return todoData
@@ -26,14 +29,13 @@ function TodoSection() {
         return <TodoCard key={todo.id} todo={todo} />;
       });
   };
+
   return (
     <div>
       {[false, true].map((bool) => {
         return (
           <SectionContainer key={bool}>
-            <h1 style={{ fontSize: "22px", fontWeight: "900" }}>
-              {bool ? "한 거..🎉" : "할 거..🔥"}
-            </h1>
+            <h1 style={{ fontSize: "22px", fontWeight: "900" }}>{bool ? "한 거..🎉" : "할 거..🔥"}</h1>
             <TodoCardContainer>{onFilterTodo(bool)}</TodoCardContainer>
           </SectionContainer>
         );
