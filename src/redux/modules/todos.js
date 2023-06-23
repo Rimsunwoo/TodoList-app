@@ -24,33 +24,19 @@ const initialState = {
   todoList: JSON.parse(localStorage.getItem("todoData")) ?? [],
 };
 
-// function
-
-const setStorage = (newData) =>
-  localStorage.setItem("todoData", JSON.stringify(newData));
-
 // Reducer
 
 const todos = (state = initialState, action) => {
   switch (action.type) {
     case ADD_TODO:
-      setStorage([...state.todoList, action.payload]);
       return { todoList: [...state.todoList, action.payload] };
     case REMOVE_TODO:
-      const newData = state.todoList.filter(
-        (todo) => todo.id !== action.payload
-      );
-      setStorage(newData);
-      return { todoList: newData };
+      return { todoList: state.todoList.filter((todo) => todo.id !== action.payload) };
     case CHANGE_TODO:
-      const changeData = state.todoList.map((todo) => {
-        return todo.id === action.payload
-          ? { ...todo, done: !todo.done }
-          : todo;
-      });
-      setStorage(changeData);
       return {
-        todoList: changeData,
+        todoList: state.todoList.map((todo) => {
+          return todo.id === action.payload ? { ...todo, done: !todo.done } : todo;
+        }),
       };
     default:
       return state;
